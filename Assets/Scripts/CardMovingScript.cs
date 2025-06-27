@@ -66,13 +66,11 @@ public class CardMovingScript : MonoBehaviour
         if (currentCard != null)
         {
             currentCard.transform.position += new Vector3(2.0f * Time.deltaTime, 0, 0);
-            // move to 4,-3
-            if (currentCard.transform.position.x > 4.0f)
-            {
-                currentCard.transform.position = new Vector3(4.0f, -3.0f, 0.0f);
-            }
+
             // TODO: please move currentCard to (4,-3) position
+            // using Vector3.MoveTowards
             //
+            Vector3.MoveTowards()
 
             // (0,0) x->>>>>>>>>>>>>>>>>>
             // (0,0) , (4,-3)
