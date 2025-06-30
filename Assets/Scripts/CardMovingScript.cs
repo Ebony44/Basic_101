@@ -7,6 +7,9 @@ public class CardMovingScript : MonoBehaviour
 
     public GameObject currentCard = null;
     public BoxCollider boxCollider;
+    public Vector3 targetVector = Vector3.zero;
+
+    public float distanceVector = 0.1f;
 
 
     public void MoveCard()
@@ -61,19 +64,40 @@ public class CardMovingScript : MonoBehaviour
 
         // call by value
         // call by reference
-        
+
 
         if (currentCard != null)
         {
-            currentCard.transform.position += new Vector3(2.0f * Time.deltaTime, 0, 0);
+            // currentCard.transform.position += new Vector3(2.0f * Time.deltaTime, 0, 0);
 
             // TODO: please move currentCard to (4,-3) position
             // using Vector3.MoveTowards
             //
-            Vector3.MoveTowards()
+            // Vector3.MoveTowards() : 사용해도 됨
 
             // (0,0) x->>>>>>>>>>>>>>>>>>
             // (0,0) , (4,-3)
+
+            // 1. move logic
+
+            // currentCard.transfrom.position += targetVector;
+
+            // 2. when reached, stop moving
+
+            if (Vector3.Distance(currentCard.transform.position, targetVector) > 0.01f)
+            {
+                // TODO: 멈추게 해
+                // 1. Vector3 MoveTowards
+                // 2. get direction of vector -> (0, 0) : 이동 방향과 거리 구하기
+                currentCard.transform.position += targetVector * distanceVector * Time.deltaTime;
+            }
+                float tempTestDistance = Vector3.Distance(Vector3.zero, new Vector3(5, 2, 0));
+                Debug.Log("tempTestdistance is " + tempTestDistance);
+
+            // if(Vector3.Distance())
+            // x^2 + y^2 = z^2
+            // 29 = z^2
+            // z = sqrt(29)
 
             // currentCard.transform.position.x += 2.0f * Time.deltaTime;
         }
