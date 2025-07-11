@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CardMovingScript : MonoBehaviour
@@ -8,6 +9,7 @@ public class CardMovingScript : MonoBehaviour
     public GameObject currentCard = null;
     public BoxCollider boxCollider;
     public Vector3 targetVector = Vector3.zero;
+    public Transform targetTrans = null;
 
     public float distanceVector = 0.1f;
 
@@ -27,10 +29,83 @@ public class CardMovingScript : MonoBehaviour
     private void Awake()
     {
         Debug.Log("I'm called by awake method");
+
+        StartCoroutine(TestRoutine(4f)); // -> StartCoroutine must be needed
+        // TestRoutine(4f); // -> no execution
+
     }
     private void OnEnable()
     {
         Debug.Log("I'm called by on enable method");
+    }
+
+
+
+    // Coroutine: 코루틴은 Update와는 다르게 프레임 단위로 실행되지 않고, 특정 시간 간격으로 실행되는 함수입니다.
+    public IEnumerator MoveRoutine()
+    {
+        // thread -> 
+        // single ->
+
+        // thread ? -> 어떻게 여러 개가 돌아가느냐? -> 여러개로 안 돌아감...
+        // 일단 순차적이긴 함..
+        
+        // co -> 
+        // company
+        // companion
+        // co + routine
+        // routine? 정형화된 과정? 
+
+        // 1. 평평하게 바닥에 앉아있음
+        // 2. 카드를 띄운 후 로테이션,
+        // 3. z 방향으로 일정이상 전진?
+        // 4. 돌아오면서 로테이션도 앉아있는 상태로
+        // 5. 1번 상태
+
+        var originPos = currentCard.transform.position;
+
+
+        yield return null;
+    }
+
+    // what is IEnumerator
+    // // IEnumerator: C#에서 반복 가능한 객체를 나타내는 인터페이스로, 주로 코루틴에서 사용됩니다.
+    public IEnumerator TestRoutine(float visualEffectTime = 2f)
+    {
+        float currentTime = 0;
+        float maxTime = visualEffectTime;
+        Debug.Log($"TestRoutine started, maxTime is {maxTime} seconds.");
+        // 1. 매 0.5초마다 로그 출력
+        // 2. 매 0.5초마다 x와 z 좌표를 랜덤하게 이동
+        // 3. 매개변수 시간(visualEffectTime)만큼의 시간이 지나면 종료
+
+        // 2.ex 만약 0.25초마다 x와 z 좌표로 하려면?
+
+        int iterationCount = 0;
+        while (currentTime < maxTime)
+        {
+            // currentTime += 0.5f * Time.deltaTime;
+            currentTime += 0.5f; // 0.5초마다 실행되도록 설정
+            // 1.
+            Debug.Log($" log displayed, current Count: {iterationCount} "
+                 + " current time is " + currentTime);
+            iterationCount++;
+            yield return new WaitForSeconds(0.5f);
+            // yield return new WaitForEndOfFrame();
+            // frame -> 
+
+            var randomX = Random.Range(-1f * 0.4f, 1f * 0.4f);
+            var randomZ = Random.Range(-1f * 0.4f, 1f * 0.4f);
+            var currentPos = currentCard.transform.position;
+            currentCard.transform.position += new Vector3(randomX, 0, randomZ);
+            // yield return new WaitForSeconds(0.25f);
+
+            // yield return new WaitForSeconds(0.5f);
+
+            // yield return new WaitForEndOfFrame();
+        }
+        Debug.Log(" routine done.");
+        
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -46,8 +121,8 @@ public class CardMovingScript : MonoBehaviour
 
         // GetComponent<GameObject>();
         var tempCollider = GetComponent<BoxCollider>();
-        
 
+        
     }
 
     // Update is called once per frame
@@ -65,6 +140,7 @@ public class CardMovingScript : MonoBehaviour
         // call by value
         // call by reference
 
+        return; // temp return, no need to update
 
         if (currentCard != null)
         {
@@ -86,6 +162,9 @@ public class CardMovingScript : MonoBehaviour
 
             if (Vector3.Distance(currentCard.transform.position, targetVector) > 0.01f)
             {
+                // currentCard.transform.position += targetVector * distanceVector * Time.deltaTime;
+                
+
                 // TODO: 멈추게 해
                 // 1. Vector3 MoveTowards
                 // 2. get direction of vector -> (0, 0) : 이동 방향과 거리 구하기
@@ -93,13 +172,22 @@ public class CardMovingScript : MonoBehaviour
                 // (0, 0, 0) -> (4, 0, 0) -> 유클리드 거리: 4
                 // (0, 0, 0) -> (4, -3, 0) -> 유클리드 거리: sqrt(73) = 8.54
                 float moveSpeed = 5f;
-                currentCard.transform.position = Vector3.MoveTowards(currentCard.transform.position, targetVector, moveSpeed * Time.deltaTime);
+                // currentCard.transform.position = Vector3.MoveTowards(currentCard.transform.position, targetVector, moveSpeed * Time.deltaTime);
+                if(targetTrans != null)
+                {
+                    currentCard.transform.position = Vector3.MoveTowards(currentCard.transform.position, targetTrans.position, moveSpeed * Time.deltaTime);
+                }
+
                 // currentCard.transform.position: 현재 카드 오브젝트 위치
                 // targetVector: 목표 위치
                 // moveSpeed * Time.deltaTime: 이번 프레임에 최대 얼마만큼 이동할 수 있는가
             }
-                float tempTestDistance = Vector3.Distance(Vector3.zero, new Vector3(5, 2, 0));
-                Debug.Log("tempTestdistance is " + tempTestDistance);
+            float tempTestDistance = Vector3.Distance(Vector3.zero, new Vector3(5, 2, 0));
+            Debug.Log("tempTestdistance is " + tempTestDistance);
+
+            // x 5, y 3 
+            // x -a, y -b 
+            // 
 
             // if(Vector3.Distance())
             // x^2 + y^2 = z^2
@@ -138,4 +226,17 @@ public class CardMovingScript : MonoBehaviour
         // 
         
     }
+
+
+    // Unity -> logic
+
+    // -> after 1 frame
+    // CardMovingScript -> object A -> Update()
+    // CardMovingScript -> object B -> Update()
+    // C,D,E, ... -> 
+    // 10000 -> update?
+    // 1 -> 10k 
+    // 1 -> for 10000 ->
+
+
 }
