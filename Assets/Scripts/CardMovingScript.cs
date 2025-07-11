@@ -89,7 +89,12 @@ public class CardMovingScript : MonoBehaviour
                 // TODO: 멈추게 해
                 // 1. Vector3 MoveTowards
                 // 2. get direction of vector -> (0, 0) : 이동 방향과 거리 구하기
-                currentCard.transform.position += targetVector * distanceVector * Time.deltaTime;
+
+                // (0, 0, 0) -> (4, 0, 0) -> 유클리드 거리: 4
+                // (0, 0, 0) -> (4, -3, 0) -> 유클리드 거리: sqrt(73) = 8.54
+                float moveSpeed = 5f;
+                currentCard.transform.position = Vector3.MoveTowards(currentCard.transform.position, targetVector, moveSpeed * Time.deltaTime);
+                // currentCard.transform.position += targetVector * distanceVector * Time.deltaTime;
             }
                 float tempTestDistance = Vector3.Distance(Vector3.zero, new Vector3(5, 2, 0));
                 Debug.Log("tempTestdistance is " + tempTestDistance);
