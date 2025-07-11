@@ -94,7 +94,9 @@ public class CardMovingScript : MonoBehaviour
                 // (0, 0, 0) -> (4, -3, 0) -> 유클리드 거리: sqrt(73) = 8.54
                 float moveSpeed = 5f;
                 currentCard.transform.position = Vector3.MoveTowards(currentCard.transform.position, targetVector, moveSpeed * Time.deltaTime);
-                // currentCard.transform.position += targetVector * distanceVector * Time.deltaTime;
+                // currentCard.transform.position: 현재 카드 오브젝트 위치
+                // targetVector: 목표 위치
+                // moveSpeed * Time.deltaTime: 이번 프레임에 최대 얼마만큼 이동할 수 있는가
             }
                 float tempTestDistance = Vector3.Distance(Vector3.zero, new Vector3(5, 2, 0));
                 Debug.Log("tempTestdistance is " + tempTestDistance);
@@ -107,7 +109,11 @@ public class CardMovingScript : MonoBehaviour
             // currentCard.transform.position.x += 2.0f * Time.deltaTime;
         }
 
-        someVariableFloat += Time.deltaTime;
+        if (someVariableFloat < 5f)
+        {
+            someVariableFloat += Time.deltaTime;
+            Debug.Log("delta time is " + Time.deltaTime);
+        }
 
         // graphic card.. fps 120
         // monitor fps 60
@@ -120,7 +126,7 @@ public class CardMovingScript : MonoBehaviour
         // fps 60
         // 1 / 60 = 0.0166667
         // 2 / 60 = 0.0333333
-        
+
         // fps 120 
         // 1 / 120 = 0.0083333
         // 2 / 120 = 0.0166667
@@ -130,7 +136,6 @@ public class CardMovingScript : MonoBehaviour
         // 0.5 
         // 60 / 120 -> 30 / 60
         // 
-
-        Debug.Log("delta time is " + Time.deltaTime);
+        
     }
 }
