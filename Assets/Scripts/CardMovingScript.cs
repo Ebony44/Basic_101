@@ -79,7 +79,10 @@ public class CardMovingScript : MonoBehaviour
         // 2. 매 0.5초마다 x와 z 좌표를 랜덤하게 이동
         // 3. 매개변수 시간(visualEffectTime)만큼의 시간이 지나면 종료
 
-        // 2.ex 만약 0.25초마다 x와 z 좌표로 하려면?
+        // 2.ex 만약 0.25초마다 x와 z 좌표로 하려면? -> 나랑 같이 해요
+
+        // TODO: 95번째 줄, 0.5초 기다리는 걸 10초로 바꾸면 어떤 일이 일어날까?
+        // TODO 2: 0.5초마다가 아니라 1초마다 로그가 찍히고, 좌표가 랜덤하게 움직이도록 하고 싶으면?
 
         int iterationCount = 0;
         while (currentTime < maxTime)
