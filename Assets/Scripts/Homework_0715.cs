@@ -58,10 +58,12 @@ public class Homework_0715 : MonoBehaviour
             yield return null;
         }
         Debug.Log("test iteration end");
-        
+
         // 0715 TODO, homemwork
         // 1. total time -> just answer it
         // 2. iteration count -> why? are those so many of them
+        // 3. why do I convert currentTime to clampValue? ( currentTime / maxTime)
+        // 4. what is clamp?
 
 
 
